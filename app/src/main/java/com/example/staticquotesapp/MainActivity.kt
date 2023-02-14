@@ -5,26 +5,24 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.TextView
+import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
+import com.example.staticquotesapp.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
+    lateinit var binding: ActivityMainBinding
     lateinit var mainViewModel: MainViewModel
-    private val quoteText : TextView
-         get() = findViewById(R.id.quotetext)
-    private val quoteAuthor : TextView
-         get() = findViewById(R.id.quoteAuthor)
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = DataBindingUtil.setContentView(this,R.layout.activity_main);
         mainViewModel = ViewModelProvider(this,MainViewModelFactory(application)).get(MainViewModel::class.java)
         setQuote(mainViewModel.getQuote())
     }
 
     fun setQuote(quote:QuoteModel){
-        quoteText.text =  quote.text
-        quoteAuthor.text =  quote.author
+        binding.quotetext.text =  quote.text
+        binding.quoteAuthor.text =  quote.author
     }
 
     fun onShare(view: View){
